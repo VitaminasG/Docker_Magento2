@@ -1,0 +1,53 @@
+version: "3.2"
+
+services:
+    nginx:
+        image: nginx:latest
+        userns_mode: "host"
+        container_name: ${D_PROJECT_NAME}_nginx
+        ports:
+            - 80:80
+        links:
+            - php
+        volumes:
+            - ./docker/Nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./docker/Nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ${D_SOURCE_DIR}:/var/www/html
+
+    php:
+        build: ./docker/PHP7.1/
+        userns_mode: "host"
+        container_name: ${D_PROJECT_NAME}_php
+        user: "${D_USER_ID}:${D_GROUP_ID}"
+        ports:
+            - 9000
+        links:
+            - db
+        volumes:
+            - ${D_SOURCE_DIR}:/var/www/html
+            - .composer:/.composer
+
+    mailhog:
+        container_name: ${D_PROJECT_NAME}_mailhog
+        image: mailhog/mailhog
+        restart: always
+        ports:
+            - 1025:1025
+            - 8025:8025
+
+    db:
+        image: mysql:5.6
+        userns_mode: "host"
+        container_name: ${D_PROJECT_NAME}_db
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - 3306
+        volumes:
+            - ${D_MYSQL_DATA_DIR}:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - TERM=meh
