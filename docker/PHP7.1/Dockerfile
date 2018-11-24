@@ -1,6 +1,7 @@
 FROM php:7.1-fpm
 RUN apt-get update && apt-get install -y \
     curl \
+    wget \
     git \
     nano \
     gnupg \
@@ -15,6 +16,11 @@ RUN apt-get update && apt-get install -y \
 && docker-php-ext-install -j$(nproc) gd
 
 RUN rm -rf /var/lib/apt/lists/*
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && php -r "unlink('composer-setup.php');"
+
 RUN curl -sL 'https://deb.nodesource.com/setup_10.x' | bash
 RUN apt-get install --yes nodejs
 RUN npm install -g grunt-cli
