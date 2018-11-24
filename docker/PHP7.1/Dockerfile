@@ -1,4 +1,8 @@
 FROM php:7.1-fpm
+
+ARG USER_NAME
+ARG USER_ID
+
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
@@ -29,3 +33,6 @@ ENV PATH /usr/local/go/bin:$PATH
 RUN go get github.com/mailhog/mhsendmail
 RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
 RUN echo 'sendmail_path = /usr/bin/mhsendmail --smtp-addr mailhog:1025' > /usr/local/etc/php/php.ini
+
+RUN useradd -r -u $USER_ID $USER_NAME
+USER $USER_NAME
