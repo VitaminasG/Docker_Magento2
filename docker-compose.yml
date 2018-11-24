@@ -34,7 +34,6 @@ services:
     mailhog:
         container_name: ${D_PROJECT_NAME}_mailhog
         image: mailhog/mailhog
-        restart: always
         ports:
             - 1025:1025
             - 8025:8025
@@ -44,7 +43,6 @@ services:
         userns_mode: "host"
         container_name: ${D_PROJECT_NAME}_db
         command: --default-authentication-plugin=mysql_native_password
-        restart: always
         ports:
             - 3306
         volumes:
