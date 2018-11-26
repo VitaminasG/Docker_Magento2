@@ -41,3 +41,5 @@ RUN echo 'memory_limit = 2048M' > /usr/local/etc/php/conf.d/docker-php-memlimit.
 RUN useradd -r -u $USER_ID -ms /bin/bash $USER_NAME
 USER $USER_NAME
 WORKDIR /home/$USER_NAME
+
+RUN echo 'cd /var/www/html' >> ~/.bashrc
