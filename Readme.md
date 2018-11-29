@@ -1,6 +1,6 @@
 INSTALL:
   
-sudo apt-get install docker-compose  
+sudo apt-get install docker docker-compose  
   
 ========================================================================================================================  
 DOCKER PALEIDIMAS:  
