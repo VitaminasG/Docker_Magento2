@@ -16,10 +16,12 @@ services:
 
     php:
         build:
-            context: ./docker/PHP7.1/
+            context: ./docker/PHP
             args:
                 USER_NAME: ${D_PROJECT_NAME}_php
                 USER_ID: ${D_USER_ID}
+                VERSION: "${PHP_VERSION}-fpm"
+                PHP_VERSION: ${PHP_VERSION}
         userns_mode: "host"
         container_name: ${D_PROJECT_NAME}_php
         user: "${D_USER_ID}:${D_GROUP_ID}"
