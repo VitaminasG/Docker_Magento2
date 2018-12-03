@@ -5,14 +5,19 @@ services:
         image: nginx:latest
         userns_mode: "host"
         container_name: ${D_PROJECT_NAME}_nginx
+        env_file:
+            - ./.env
         ports:
             - 80:80
         links:
             - php
         volumes:
+            - ./docker/Nginx/start.sh:/home/scripts/start.sh
             - ./docker/Nginx/nginx.conf:/etc/nginx/nginx.conf
-            - ./docker/Nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./docker/Nginx/default.conf.tpl:/etc/nginx/conf.d/default.conf.tpl
+            - ./docker/Nginx/tools.conf.tpl:/etc/nginx/conf.d/tools.conf.tpl
             - ${D_SOURCE_DIR}:/var/www/html
+        entrypoint: /home/scripts/start.sh
 
     php:
         build:
