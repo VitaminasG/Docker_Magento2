@@ -14,7 +14,7 @@ services:
         volumes:
             - ./docker/Nginx/start.sh:/home/scripts/start.sh
             - ./docker/Nginx/nginx.conf:/etc/nginx/nginx.conf
-            - ./docker/Nginx/default.conf.tpl:/etc/nginx/conf.d/default.conf.tpl
+            - ./docker/Nginx/magento2.conf.tpl:/etc/nginx/conf.d/default.conf.tpl
             - ./docker/Nginx/tools.conf.tpl:/etc/nginx/conf.d/tools.conf.tpl
             - ${D_SOURCE_DIR}:/var/www/html
         entrypoint: /home/scripts/start.sh
