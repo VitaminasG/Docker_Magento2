@@ -35,6 +35,7 @@ services:
         links:
             - db
         volumes:
+            - ./docker/PHP/docker-php.ini:/usr/local/etc/php/conf.d/docker-php.ini
             - ${D_SOURCE_DIR}:/var/www/html
             - .composer:/.composer
 
