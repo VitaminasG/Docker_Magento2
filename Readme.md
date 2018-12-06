@@ -58,3 +58,42 @@ SMTP CONFIGAS
 3. Nuimt authentifikacija  
 4. Protocol: none  
 
+========================================================================================================================
+DNSMASQ installation and configuration
+
+**Install dnsmasq:**
+`sudo apt-get install dnsmasq`
+
+**Enable dnsmasq in NetworkManager:**
+Edit the file `/etc/NetworkManager/NetworkManager.conf`, and add the line `dns=dnsmasq` to the `[main]` section.
+
+*Example:*
+```
+[main]
+plugins=ifupdown,keyfile
+dns=dnsmasq
+
+[ifupdown]
+managed=false
+
+[device]
+wifi.scan-rand-mac-address=no
+```
+
+**Let NetworkManager manage `/etc/resolv.conf`**
+*Backup original file:*
+`sudo mv /etc/resolv.conf /etc/resolv.conf.back`
+
+*Create the simlink of `resolv.conf`:*
+`sudo ln -s /var/run/NetworkManager/resolv.conf /etc/resolv.conf`
+
+**Create the configuration for the new wildcard domain:**
+Create the configuration file in `/etc/NetworkManager/dnsmasq.d/` and add configuration to it `address=/[domain]/[IP]`
+
+*Example:*
+`echo 'address=/.loc/192.168.0.91' | sudo tee /etc/NetworkManager/dnsmasq.d/loc-wildcard.conf`
+
+It will redirects all reques from `*.loc` to `192.168.0.91`
+
+**Reload NetworkManager**
+`sudo systemctl reload NetworkManager`
