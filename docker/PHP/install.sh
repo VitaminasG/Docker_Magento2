@@ -13,7 +13,8 @@ apt-get update && apt-get install -y \
     libxml2-dev \
     libxslt1-dev \
     unzip \
-    zip
+    zip \
+    cron
 
 docker-php-ext-install -j$(nproc) iconv mcrypt pdo_mysql bcmath xml xsl mbstring soap json zip intl
 
