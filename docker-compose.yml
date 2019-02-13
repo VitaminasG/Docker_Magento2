@@ -37,7 +37,7 @@ services:
         volumes:
             - ./docker/PHP/docker-php.ini:/usr/local/etc/php/conf.d/docker-php.ini
             - ${D_SOURCE_DIR}:/var/www/html
-            - .composer:/.composer
+            - .composer:/home/${D_PROJECT_NAME}_php/.composer
 
     mailhog:
         container_name: ${D_PROJECT_NAME}_mailhog
